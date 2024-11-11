@@ -1,0 +1,65 @@
+{
+  "name": "react-leaflet-kds-layers",
+  "version": "1.0.0",
+  "description": "WMSTileLayer components for maps provided by Klimadatastyrelsen",
+  "main": "dist/index.js",
+  "browser": "dist/index.js",
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx --ignore-path .gitignore --fix",
+    "format": "prettier --write --parser typescript '**/*.{ts,tsx}",
+    "build": "rollup -c",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "react-leaflet-kds-layers"
+  },
+  "author": "Christian Pilegaard Cederquist",
+  "license": "GPL-3.0-or-later",
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.2",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "@storybook/addon-essentials": "^8.4.2",
+    "@storybook/addon-interactions": "^8.4.2",
+    "@storybook/addon-onboarding": "^8.4.2",
+    "@storybook/addon-webpack5-compiler-swc": "^1.0.5",
+    "@storybook/blocks": "^8.4.2",
+    "@storybook/react": "^8.4.2",
+    "@storybook/react-webpack5": "^8.4.2",
+    "@storybook/test": "^8.4.2",
+    "@types/leaflet": "^1.9.14",
+    "@types/proj4leaflet": "^1.0.10",
+    "@types/react": "^18.3.12",
+    "@types/rollup-plugin-peer-deps-external": "^2.2.5",
+    "@typescript-eslint/eslint-plugin": "^8.13.0",
+    "@typescript-eslint/parser": "^8.13.0",
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-storybook": "^0.11.0",
+    "prettier": "^3.3.3",
+    "rollup": "^4.25.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-filesize": "^10.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "storybook": "^8.4.2",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "proj4leaflet": "^1.0.2",
+    "react-leaflet": "^4.2.1"
+  }
+}
