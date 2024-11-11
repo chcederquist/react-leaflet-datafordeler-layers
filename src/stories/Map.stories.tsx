@@ -32,7 +32,7 @@ export const Map: Story = {
   args: {
     layers: 'dtk_skaermkort',
     crs: CRS.EPSG3395,
-    token: 'secret',
+    token: process.env.TOKEN_DATAFORDELEREN!,
     transparent: true,
     format: 'image/png'
   },
