@@ -1,5 +1,6 @@
 import type { CRS } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
 import { WMSTileLayer } from 'react-leaflet';
 
@@ -11,8 +12,12 @@ export type SkaermkortTileLayerProps = Readonly<{
   format: 'image/jpeg' | 'image/png';
   version?: string;
 }>
-
-export function SkaermkortTileLayer({ version, format, layers, token, crs, transparent }: SkaermkortTileLayerProps) {
+export const epsg25832 = new L.Proj.CRS('EPSG:25832',
+  '+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs',
+  {    resolutions: [1638.4,819.2,409.6,204.8,102.4,51.2,25.6,12.8,6.4,3.2,1.6,0.8,0.4,0.2,0.1] 
+  }
+);
+export function SkaermkortTileLayer({ version, format, layers, token, transparent }: SkaermkortTileLayerProps) {
 
   return <WMSTileLayer
       url={'https://api.dataforsyningen.dk/topo_skaermkort_DAF?token='+token}
@@ -22,7 +27,8 @@ export function SkaermkortTileLayer({ version, format, layers, token, crs, trans
       layers={layers}
       //@ts-expect-error
       transparent={transparent ? 'TRUE' : 'FALSE'}
-      crs={crs}
+      
+      crs={epsg25832}
       format={format}
     ></WMSTileLayer>
 }

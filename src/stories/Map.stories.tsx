@@ -1,8 +1,7 @@
 import { MapContainer } from 'react-leaflet';
 
 import type { Meta, StoryObj } from '@storybook/react';
-import { SkaermkortTileLayer } from '../SkaermkortTileLayer';
-import { CRS } from 'leaflet';
+import { epsg25832, SkaermkortTileLayer } from '../SkaermkortTileLayer';
 
 const meta = {
   title: 'Map',
@@ -11,9 +10,10 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <MapContainer zoom={9}
+      <MapContainer zoom={3}
+      crs={epsg25832}
       bounds={[[53.015, 2.47842], [58.6403, 17.5578]]}
-       style={{height: 500+'px', width: 500+'px'}}
+       style={{height: 1000+'px', width: 1000+'px'}}
       center={[55.345, 10.335]}>
         <Story />
       </MapContainer>
@@ -30,10 +30,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Map: Story = {
   args: {
-    layers: 'dtk_skaermkort',
-    crs: CRS.EPSG3395,
+    layers: 'dtk_skaermkort_daempet',
     token: process.env.TOKEN_DATAFORDELEREN!,
-    transparent: true,
+    transparent: false,
     format: 'image/png'
   },
 };
