@@ -24,6 +24,7 @@ export type WfsMember = {
   'dagi:Afstemningsomraade': DagiAfstemningsomraade;
   'dagi:Regionsinddeling': GenericDagiArea;
   'dagi:Opstillingskreds': GenericDagiArea;
+  'dagi:Kommuneinddeling': GenericDagiArea;
 };
 export type DagiMultiGeomResponse = {
   'wfs:FeatureCollection': {
