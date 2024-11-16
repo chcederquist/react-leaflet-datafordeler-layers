@@ -2,7 +2,7 @@ import { MapContainer } from 'react-leaflet';
 
 import type { Meta, StoryObj } from '@storybook/react';
 import { EPSG25832 } from '../util';
-import { OrtofotoTileLayer } from '../OrtofotoTileLayer';
+import { OrtofotoTileLayer } from '../WMS/OrtofotoTileLayer';
 
 const meta = {
   title: 'Ortofoto',

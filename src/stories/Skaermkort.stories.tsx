@@ -1,7 +1,7 @@
 import { MapContainer } from 'react-leaflet';
 
 import type { Meta, StoryObj } from '@storybook/react';
-import { SkaermkortTileLayer } from '../SkaermkortTileLayer';
+import { SkaermkortTileLayer } from '../WMS/SkaermkortTileLayer';
 import { EPSG25832 } from '../util';
 
 const meta = {

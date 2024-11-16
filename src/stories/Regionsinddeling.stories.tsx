@@ -2,12 +2,12 @@ import { MapContainer } from 'react-leaflet';
 
 import type { Meta, StoryObj } from '@storybook/react';
 import { EPSG25832 } from '../util';
-import { Afstemningsomraade } from '../WFS/DAGI/Afstemningsomraade';
 import { SkaermkortTileLayer } from '../WMS/SkaermkortTileLayer';
+import { Regionsinddeling } from '../WFS/DAGI/Regionsinddeling';
 
 const meta = {
-  title: 'Afstemningsområde',
-  component: Afstemningsomraade,
+  title: 'Regionsinddeling',
+  component: Regionsinddeling,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   decorators: [
@@ -27,12 +27,12 @@ const meta = {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof Afstemningsomraade>;
+} satisfies Meta<typeof Regionsinddeling>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const AfstemningsomraadeMap: Story = {
+export const RegionsinddelingMap: Story = {
   args: {
     token: process.env.TOKEN_DATAFORDELEREN!,
   },

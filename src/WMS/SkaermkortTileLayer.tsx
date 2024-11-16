@@ -2,7 +2,7 @@ import type { CRS } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import { WMSTileLayer } from 'react-leaflet';
-import { EPSG25832 } from './util';
+import { EPSG25832 } from '../util';
 
 export type SkaermkortTileLayerProps = Readonly<{
   token: string;

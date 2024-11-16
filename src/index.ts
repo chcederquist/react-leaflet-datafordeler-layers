@@ -1,3 +1,3 @@
-export { SkaermkortTileLayer } from './SkaermkortTileLayer';
-export type { SkaermkortTileLayerProps } from './SkaermkortTileLayer';
+export { SkaermkortTileLayer } from './WMS/SkaermkortTileLayer';
+export type { SkaermkortTileLayerProps } from './WMS/SkaermkortTileLayer';
 export { EPSG25832 } from './util';
