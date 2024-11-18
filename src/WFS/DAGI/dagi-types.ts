@@ -1,7 +1,7 @@
 import { DagiAfstemningsomraade } from './Afstemningsomraade';
 
 export type GenericDagiArea = {
-  'dagi:id.lokalId': number,
+  'dagi:id.lokalId': string,
   'dagi:geometri': DagiGeometri
 }
 
