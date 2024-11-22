@@ -32,7 +32,7 @@ export function quickXmlParse(xml: string) {
   const o: any = {};
   let cur = o;
   let curName = ''
-  let curContent: [number,number] = [-1,-1]
+  let curContent: [number,number] = [-1,-1];
   let hasContent = false;
   for (let i = 0; i < xml.length; i++) {
     let curChar = xml[i];
@@ -40,7 +40,12 @@ export function quickXmlParse(xml: string) {
       if (xml[i+1] === '/') { // Inside a closing tag
         cur = cur.__parent;
         if (hasContent) { // Insert content instead of current object
-          cur[curName] = xml.slice(curContent[0], curContent[1]);
+          if (cur[curName] instanceof Array) {
+            const lastIdx = cur[curName].length-1;
+            cur[curName][lastIdx] = xml.slice(curContent[0], curContent[1]);
+          } else {
+            cur[curName] = xml.slice(curContent[0], curContent[1]);
+          }
         }
         while(xml[i] !== '>') {
           i++;
@@ -84,7 +89,7 @@ export function quickXmlParse(xml: string) {
         // Handle next
         i++; // Move to first char
         let name = ''; // Create a name
-        while(xml[i] !== ' ' && xml[i] !== '>' && xml[i] !== '/') { // Go until attributes or closing
+        while(xml[i] !== ' ' && xml[i] !== '>' && xml[i] !== '/') { // Go until attributes or closing. TODO: Handle XML attributes
           name += xml[i];
           i++
         }
@@ -120,14 +125,14 @@ export function quickXmlParse(xml: string) {
     } else if (curName) { // Inside curName
       let contentFrom = i; // TODO: Handle mixed content
       while(xml[i] !== '<') {
-        if(!hasContent && (xml[i] !== ' ' || xml[i] !== '\n')) {
+        if(!hasContent && (xml[i] !== ' ' && xml[i] !== '\n')) {
           hasContent = true;
         }
         i++
       }
       let contentTo = i;
       i--
-      curContent = [contentFrom, contentTo]
+      curContent = [contentFrom, contentTo] // TODO: Trim spaces
     }
   }
   return o;

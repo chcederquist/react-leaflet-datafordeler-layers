@@ -60,6 +60,8 @@
   },
   "dependencies": {
     "proj4leaflet": "^1.0.2",
-    "react-leaflet": "^4.2.1"
+    "react-leaflet": "^4.2.1",
+    "rapid-xml-to-json": "0.0.2",
+    "@chce/weeknumber-iso8601": "1.0.6"
   }
 }

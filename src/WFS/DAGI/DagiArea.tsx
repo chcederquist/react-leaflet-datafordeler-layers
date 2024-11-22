@@ -4,7 +4,8 @@ import { EPSG25832 } from '../../util';
 import { useEffect, useState } from 'react';
 import { Polygon, useMap, useMapEvents } from 'react-leaflet';
 import { DagiGeometri, DagiMultiGeomResponse, WfsMember } from './dagi-types';
-import { getPolygonsFromDagiAreas, quickXmlParse } from './parsing';
+import { getPolygonsFromDagiAreas } from './parsing';
+import { xmlToJson } from 'rapid-xml-to-json';
 
 export type DagiAreaProps = Readonly<{
   token: string;
@@ -60,7 +61,7 @@ export function DagiArea({ token, maxAreasFetched = 25, typename, fetchWithinVie
     const url = `https://api.dataforsyningen.dk/DAGI_10MULTIGEOM_GMLSFP_DAF?service=WFS&request=GetFeature&version=2.0.0&typenames=${typename}&count=${maxAreasFetched}&token=${token}${bounds ? `&bbox=${bounds?.join(',')}`:''}`;
     fetch(url).then(res => res.text().then(xml => {
       // Parse out polygons using xml2json + manual traversing
-      let json = quickXmlParse(xml) as DagiMultiGeomResponse;
+      let json = xmlToJson(xml) as DagiMultiGeomResponse;
       console.log(json);
       const parseVotingAreas = getPolygonsFromDagiAreas(json, typenameToWfsMemberKey[typename], (member) => {
         return member['dagi:id.lokalId'];

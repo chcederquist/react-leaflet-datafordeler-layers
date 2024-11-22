@@ -5,7 +5,8 @@ import { WMSTileLayer } from 'react-leaflet';
 import { EPSG25832 } from '../util';
 
 export type SkaermkortTileLayerProps = Readonly<{
-  token: string;
+  token?: string;
+  usernameAndPassword?: {username: string, password: string};
   crs?: typeof CRS.EPSG3395 | typeof CRS.EPSG3857 | typeof CRS.EPSG4326 | typeof EPSG25832 | CRS;
   transparent?: boolean;
   layers: 'dtk_skaermkort' | 'topo_skaermkort' | 'dtk_skaermkort_graa' | 'dtk_skaermkort_daempet';
@@ -13,10 +14,10 @@ export type SkaermkortTileLayerProps = Readonly<{
   version?: string;
 }>
 
-export function SkaermkortTileLayer({ version, format, layers, crs, token, transparent }: SkaermkortTileLayerProps) {
+export function SkaermkortTileLayer({ version, format, layers, crs, token, usernameAndPassword, transparent }: SkaermkortTileLayerProps) {
 
   return <WMSTileLayer
-      url={'https://api.dataforsyningen.dk/topo_skaermkort_DAF?token='+token}
+      url={`https://services.datafordeler.dk/Dkskaermkort/topo_skaermkort/1.0.0/wms?${usernameAndPassword ? 'username='+usernameAndPassword.username+'&password='+usernameAndPassword.password : token ? '&token='+token:''}`}
       attribution='Dataforsyningen'
       crossOrigin={true}
       version={version ?? '1.3.0'}
