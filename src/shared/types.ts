@@ -1,0 +1,1 @@
+export type UsernameAndPassword = {username: string; password: string};

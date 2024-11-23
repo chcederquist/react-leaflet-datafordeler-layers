@@ -1,10 +1,11 @@
 import 'leaflet/dist/leaflet.css';
 
 import { TileLayer } from 'react-leaflet';
+import { UsernameAndPassword } from '../shared/types';
 
 export type WMTSSkaermkortTileLayerProps = Readonly<{
   token?: string;
-  usernameAndPassword?: {username: string, password: string}
+  usernameAndPassword?: UsernameAndPassword
   dataSource: 'topo_skaermkort_wmts' | 'topo_skaermkort_daempet' | 'topo_skaermkort_graa'
   layer: 'topo_skaermkort' | 'topo_skaermkort_daempet' | 'topo_skaermkort_graa';
   format: 'image/jpeg' | 'image/png';

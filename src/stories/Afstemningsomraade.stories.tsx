@@ -18,7 +18,7 @@ const meta = {
       bounds={[[53.015, 2.47842], [58.6403, 17.5578]]}
        style={{height: 1000+'px', width: 1000+'px'}}
       center={[55.345, 10.335]}>
-        <SkaermkortTileLayer format='image/png' layers='dtk_skaermkort' token={process.env.TOKEN_DATAFORDELEREN!}></SkaermkortTileLayer>
+        <SkaermkortTileLayer format='image/png' layers='dtk_skaermkort' usernameAndPassword={{username: process.env.UN_DATAFORDELEREN!, password: process.env.PW_DATAFORDELEREN!}}></SkaermkortTileLayer>
         <Story />
       </MapContainer>
     )
@@ -34,6 +34,6 @@ type Story = StoryObj<typeof meta>;
 
 export const AfstemningsomraadeMap: Story = {
   args: {
-    token: process.env.TOKEN_DATAFORDELEREN!,
+    usernameAndPassword: {username: process.env.UN_DATAFORDELEREN!, password: process.env.PW_DATAFORDELEREN!},
   },
 };

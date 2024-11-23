@@ -1,10 +1,11 @@
 import 'leaflet/dist/leaflet.css';
 
 import { TileLayer } from 'react-leaflet';
+import { UsernameAndPassword } from '../shared/types';
 
 export type WMTSOrtofotoTileLayerProps = Readonly<{
   token?: string;
-  usernameAndPassword?: {username: string, password: string}
+  usernameAndPassword?: UsernameAndPassword;
   format: 'image/jpeg' | 'image/png';
   version?: string;
 }>

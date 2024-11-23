@@ -8,7 +8,8 @@ import { getPolygonsFromDagiAreas } from './parsing';
 import { xmlToJson } from 'rapid-xml-to-json';
 
 export type DagiAreaProps = Readonly<{
-  token: string;
+  token?: string;
+  usernameAndPassword?: {username: string; password: string};
   crs?: typeof CRS.EPSG3395 | typeof CRS.EPSG3857 | typeof CRS.EPSG4326 | typeof EPSG25832 | CRS;
   version?: string;
   maxAreasFetched?: number;
@@ -17,10 +18,10 @@ export type DagiAreaProps = Readonly<{
 }>
 
 const typenameToWfsMemberKey: Record<'Regionsinddeling' | 'Afstemningsomraade' | 'Opstillingskreds' | 'Kommuneinddeling', keyof WfsMember> = {
-  Afstemningsomraade: 'dagi:Afstemningsomraade',
-  Regionsinddeling: 'dagi:Regionsinddeling',
-  Opstillingskreds: 'dagi:Opstillingskreds',
-  Kommuneinddeling: 'dagi:Kommuneinddeling'
+  Afstemningsomraade: 'dagi10:Afstemningsomraade',
+  Regionsinddeling: 'dagi10:Regionsinddeling',
+  Opstillingskreds: 'dagi10:Opstillingskreds',
+  Kommuneinddeling: 'dagi10:Kommuneinddeling'
 }
 export type GenericDagiArea = {
   'dagi:id.lokalId': number,
@@ -30,7 +31,7 @@ export type GenericDagiArea = {
 
 export type GenericArea = {polygons: LatLng[][], id: number | string};
 
-export function DagiArea({ token, maxAreasFetched = 25, typename, fetchWithinViewport }: DagiAreaProps) {
+export function DagiArea({ token, maxAreasFetched = 25, typename, fetchWithinViewport, usernameAndPassword }: DagiAreaProps) {
   // Fetch geodata
   const map = useMap();
   const [bounds, setBounds] = useState<[number,number,number,number]>();
@@ -58,13 +59,13 @@ export function DagiArea({ token, maxAreasFetched = 25, typename, fetchWithinVie
   
   const [votingAreas, setVotingAreas] = useState<GenericArea[]>([]);
   useEffect(() => {
-    const url = `https://api.dataforsyningen.dk/DAGI_10MULTIGEOM_GMLSFP_DAF?service=WFS&request=GetFeature&version=2.0.0&typenames=${typename}&count=${maxAreasFetched}&token=${token}${bounds ? `&bbox=${bounds?.join(',')}`:''}`;
+    const url = `https://wfs.datafordeler.dk/DAGIM/DAGI_10MULTIGEOM_GMLSFP/1.0.0/WFS?service=WFS&request=GetFeature&version=2.0.0&typenames=${typename}&count=${maxAreasFetched}${usernameAndPassword ? `&username=${usernameAndPassword.username}&password=${usernameAndPassword.password}` : `&token=${token}`}${bounds ? `&bbox=${bounds?.join(',')}`:''}`;
     fetch(url).then(res => res.text().then(xml => {
       // Parse out polygons using xml2json + manual traversing
       let json = xmlToJson(xml) as DagiMultiGeomResponse;
       console.log(json);
       const parseVotingAreas = getPolygonsFromDagiAreas(json, typenameToWfsMemberKey[typename], (member) => {
-        return member['dagi:id.lokalId'];
+        return member['dagi10:id.lokalId'];
       })
       setVotingAreas(parseVotingAreas)
     }));

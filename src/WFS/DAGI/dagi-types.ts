@@ -1,30 +1,30 @@
 import { DagiAfstemningsomraade } from './Afstemningsomraade';
 
 export type GenericDagiArea = {
-  'dagi:id.lokalId': string,
-  'dagi:geometri': DagiGeometri
+  'dagi10:id.lokalId': string,
+  'dagi10:geometri': DagiGeometri
 }
 
 type GmlPolygon = {
   'gml:exterior': {
     'gml:LinearRing': {
-      'gml:coordinates': string;
+      'gml:posList': string;
     };
   };
 };
-type GmlSurfaceMember = {
+type GmlGeometryMember = {
   'gml:Polygon': GmlPolygon;
 };
 export type DagiGeometri = {
-  'gml:MultiSurface': {
-    'gml:surfaceMember': GmlSurfaceMember | GmlSurfaceMember[];
+  'gml:MultiGeometry': {
+    'gml:geometryMember': GmlGeometryMember | GmlGeometryMember[];
   };
 };
 export type WfsMember = {
-  'dagi:Afstemningsomraade': DagiAfstemningsomraade;
-  'dagi:Regionsinddeling': GenericDagiArea;
-  'dagi:Opstillingskreds': GenericDagiArea;
-  'dagi:Kommuneinddeling': GenericDagiArea;
+  'dagi10:Afstemningsomraade': DagiAfstemningsomraade;
+  'dagi10:Regionsinddeling': GenericDagiArea;
+  'dagi10:Opstillingskreds': GenericDagiArea;
+  'dagi10:Kommuneinddeling': GenericDagiArea;
 };
 export type DagiMultiGeomResponse = {
   'wfs:FeatureCollection': {
