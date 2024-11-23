@@ -3,18 +3,20 @@ import 'leaflet/dist/leaflet.css';
 import { EPSG25832 } from '../../util';
 import { DagiArea } from './DagiArea';
 import { UsernameAndPassword } from '../../shared/types';
+import { Scale } from './dagi-types';
 
 export type KommuneinddelingProps = Readonly<{
   token?: string;
   crs?: typeof CRS.EPSG3395 | typeof CRS.EPSG3857 | typeof CRS.EPSG4326 | typeof EPSG25832 | CRS;
   version?: string;
-  usernameAndPassword?: UsernameAndPassword
+  usernameAndPassword?: UsernameAndPassword;
+  scale?: Scale;
 }>
 
 
 
 export type GenericArea = {polygons: LatLng[][], id: number | string};
 
-export function Kommuneinddeling({ token, usernameAndPassword, crs }: KommuneinddelingProps) {
-  return <DagiArea token={token} typename='Kommuneinddeling' usernameAndPassword={usernameAndPassword} crs={crs} fetchWithinViewport={true}></DagiArea>
+export function Kommuneinddeling({ token, usernameAndPassword, crs, scale = '25' }: KommuneinddelingProps) {
+  return <DagiArea token={token} typename='Kommuneinddeling' usernameAndPassword={usernameAndPassword} scale={scale} crs={crs} fetchWithinViewport={false}></DagiArea>
 }

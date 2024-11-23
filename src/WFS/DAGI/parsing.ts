@@ -1,18 +1,18 @@
 import { type LatLng, Point } from "leaflet";
 import { EPSG25832 } from "../../util";
 import { GenericArea } from "./Afstemningsomraade";
-import { WfsMember, DagiMultiGeomResponse } from "./dagi-types";
+import { WfsMember, DagiMultiGeomResponse, Scale } from "./dagi-types";
 
 
-export function getPolygonsFromDagiAreas<T extends keyof WfsMember>(dagiAreas: DagiMultiGeomResponse, key: T, idGenerator: (member: WfsMember[T]) => string) {
+export function getPolygonsFromDagiAreas<T extends keyof WfsMember>(dagiAreas: DagiMultiGeomResponse, key: T, idGenerator: (member: WfsMember[T]) => string, scale: Scale) {
   const votingAreas = [dagiAreas['wfs:FeatureCollection']['wfs:member']].flatMap(c => c);
   const votingAreasTransformed: GenericArea[] = [];
   for (let votingArea of votingAreas) {
-    const surfaceMembers = [votingArea[key]['dagi10:geometri']['gml:MultiGeometry']['gml:geometryMember']].flatMap(c => c);
+    const surfaceMembers = [votingArea[key][`dagi${scale}:geometri`]['gml:MultiGeometry']['gml:geometryMember']].flatMap(c => c);
     const polygonsForDagiArea: LatLng[][] = [];
     for (let surfaceMember of surfaceMembers) {
       polygonsForDagiArea.push()
-      let maxPolySize = 40;
+      let maxPolySize = 200;
       let points: [number,number,number][] = []
       let coords = surfaceMember['gml:Polygon']['gml:exterior']['gml:LinearRing']['gml:posList'].split(' ').map(c=>+c);
       for (let i = 0; i < coords.length; i+=3) {

@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import { EPSG25832 } from '../../util';
 import { useEffect, useState } from 'react';
 import { Polygon, useMap, useMapEvents } from 'react-leaflet';
-import { DagiGeometri, DagiMultiGeomResponse, WfsMember } from './dagi-types';
+import { DagiMultiGeomResponse, Scale, WfsMember } from './dagi-types';
 import { getPolygonsFromDagiAreas } from './parsing';
 import { xmlToJson } from 'rapid-xml-to-json';
 
@@ -12,26 +12,19 @@ export type DagiAreaProps = Readonly<{
   usernameAndPassword?: {username: string; password: string};
   crs?: typeof CRS.EPSG3395 | typeof CRS.EPSG3857 | typeof CRS.EPSG4326 | typeof EPSG25832 | CRS;
   version?: string;
+  scale?: Scale;
   maxAreasFetched?: number;
   fetchWithinViewport: boolean;
   typename: 'Regionsinddeling' | 'Afstemningsomraade' | 'Opstillingskreds' | 'Kommuneinddeling'
 }>
 
-const typenameToWfsMemberKey: Record<'Regionsinddeling' | 'Afstemningsomraade' | 'Opstillingskreds' | 'Kommuneinddeling', keyof WfsMember> = {
-  Afstemningsomraade: 'dagi10:Afstemningsomraade',
-  Regionsinddeling: 'dagi10:Regionsinddeling',
-  Opstillingskreds: 'dagi10:Opstillingskreds',
-  Kommuneinddeling: 'dagi10:Kommuneinddeling'
+const typenameToWfsMemberKey = (key: 'Regionsinddeling' | 'Afstemningsomraade' | 'Opstillingskreds' | 'Kommuneinddeling', scale: Scale): keyof WfsMember => {
+  return `dagi${scale}:${key}`;
 }
-export type GenericDagiArea = {
-  'dagi:id.lokalId': number,
-  'dagi:geometri': DagiGeometri
-}
-
 
 export type GenericArea = {polygons: LatLng[][], id: number | string};
 
-export function DagiArea({ token, maxAreasFetched = 25, typename, fetchWithinViewport, usernameAndPassword }: DagiAreaProps) {
+export function DagiArea({ token, maxAreasFetched = 100, typename, scale = '10', fetchWithinViewport, usernameAndPassword }: DagiAreaProps) {
   // Fetch geodata
   const map = useMap();
   const [bounds, setBounds] = useState<[number,number,number,number]>();
@@ -59,14 +52,15 @@ export function DagiArea({ token, maxAreasFetched = 25, typename, fetchWithinVie
   
   const [votingAreas, setVotingAreas] = useState<GenericArea[]>([]);
   useEffect(() => {
-    const url = `https://wfs.datafordeler.dk/DAGIM/DAGI_10MULTIGEOM_GMLSFP/1.0.0/WFS?service=WFS&request=GetFeature&version=2.0.0&typenames=${typename}&count=${maxAreasFetched}${usernameAndPassword ? `&username=${usernameAndPassword.username}&password=${usernameAndPassword.password}` : `&token=${token}`}${bounds ? `&bbox=${bounds?.join(',')}`:''}`;
+
+    const url = `https://wfs.datafordeler.dk/DAGIM/DAGI_${(scale === '10' ? '10' : scale === '2k' ? '2000': scale === '50' ? '500' : '250')}MULTIGEOM_GMLSFP/1.0.0/WFS?service=WFS&request=GetFeature&version=2.0.0&typenames=${typename}&count=${maxAreasFetched}${usernameAndPassword ? `&username=${usernameAndPassword.username}&password=${usernameAndPassword.password}` : `&token=${token}`}${bounds ? `&bbox=${bounds?.join(',')}`:''}`;
     fetch(url).then(res => res.text().then(xml => {
       // Parse out polygons using xml2json + manual traversing
       let json = xmlToJson(xml) as DagiMultiGeomResponse;
       console.log(json);
-      const parseVotingAreas = getPolygonsFromDagiAreas(json, typenameToWfsMemberKey[typename], (member) => {
-        return member['dagi10:id.lokalId'];
-      })
+      const parseVotingAreas = getPolygonsFromDagiAreas(json, typenameToWfsMemberKey(typename, scale), (member) => {
+        return member[`dagi${scale}:id.lokalId`];
+      }, scale)
       setVotingAreas(parseVotingAreas)
     }));
     

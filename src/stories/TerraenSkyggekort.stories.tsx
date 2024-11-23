@@ -2,7 +2,7 @@ import { MapContainer } from 'react-leaflet';
 
 import type { Meta, StoryObj } from '@storybook/react';
 import { EPSG25832 } from '../util';
-import { TerraenTileLayer } from '../WMS/TerraenkortTileLayer';
+import { TerraenTileLayer } from '../WMS/TerraenTileLayer';
 import { OrtofotoTileLayer } from '../WMS/OrtofotoTileLayer';
 
 const meta = {

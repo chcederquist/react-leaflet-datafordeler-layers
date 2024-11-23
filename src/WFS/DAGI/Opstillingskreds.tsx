@@ -1,7 +1,7 @@
 import { type CRS, type LatLng } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { EPSG25832 } from '../../util';
-import { GenericDagiArea } from './dagi-types';
+import { GenericDagiArea, Scale } from './dagi-types';
 import { DagiArea } from './DagiArea';
 import { UsernameAndPassword } from '../../shared/types';
 
@@ -10,6 +10,7 @@ export type OpstillingskredsProps = Readonly<{
   usernameAndPassword?: UsernameAndPassword;
   crs?: typeof CRS.EPSG3395 | typeof CRS.EPSG3857 | typeof CRS.EPSG4326 | typeof EPSG25832 | CRS;
   version?: string;
+  scale?: Scale;
 }>
 
 
@@ -19,6 +20,6 @@ export type DagiAfstemningsomraade = {
 } & GenericDagiArea;
 export type GenericArea = {polygons: LatLng[][], id: number | string};
 
-export function Opstillingskreds({ token, usernameAndPassword }: OpstillingskredsProps) {
-  return <DagiArea token={token} usernameAndPassword={usernameAndPassword} typename='Opstillingskreds' fetchWithinViewport={true}></DagiArea>
+export function Opstillingskreds({ token, usernameAndPassword, scale = '50' }: OpstillingskredsProps) {
+  return <DagiArea token={token} usernameAndPassword={usernameAndPassword} scale={scale} typename='Opstillingskreds' fetchWithinViewport={false}></DagiArea>
 }

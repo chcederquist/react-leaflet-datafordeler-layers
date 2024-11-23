@@ -1,3 +1,21 @@
 export { SkaermkortTileLayer } from './WMS/SkaermkortTileLayer';
 export type { SkaermkortTileLayerProps } from './WMS/SkaermkortTileLayer';
-export { EPSG25832 } from './util';
+export { DTKTileLayer } from './WMS/DTKTileLayer';
+export type { DTKTileLayerProps } from './WMS/DTKTileLayer';
+export { WMTSOrtofotoTileLayer } from './WMTS/WMTSOrtofotoTileLayer';
+export type { WMTSOrtofotoTileLayerProps } from './WMTS/WMTSOrtofotoTileLayer';
+export { WMTSSkaermkortTileLayer } from './WMTS/WMTSSkaermkortTileLayer';
+export type { WMTSSkaermkortTileLayerProps } from './WMTS/WMTSSkaermkortTileLayer';
+export { TerraenTileLayer } from './WMS/TerraenTileLayer';
+export type { TerraenTileLayerProps } from './WMS/TerraenTileLayer';
+export { Afstemningsomraade } from './WFS/DAGI/Afstemningsomraade';
+export type { AfstemningsomraadeProps } from './WFS/DAGI/Afstemningsomraade';
+export { Kommuneinddeling } from './WFS/DAGI/Kommuneinddeling';
+export type { KommuneinddelingProps } from './WFS/DAGI/Kommuneinddeling';
+export { Opstillingskreds } from './WFS/DAGI/Opstillingskreds';
+export type { OpstillingskredsProps } from './WFS/DAGI/Opstillingskreds';
+export { Regionsinddeling } from './WFS/DAGI/Regionsinddeling';
+export type { RegionsinddelingProps } from './WFS/DAGI/Regionsinddeling';
+export { DagiArea } from './WFS/DAGI/DagiArea';
+export type { DagiAreaProps } from './WFS/DAGI/DagiArea'
+export { EPSG25832, EPSG25832WMTS } from './util';
