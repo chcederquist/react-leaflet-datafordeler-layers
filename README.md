@@ -3,7 +3,6 @@
 This library provides React Leaflet components for integrating WMS, WMTS, and WFS services from [Datafordeleren](https://datafordeler.dk) into your maps. These components are designed for seamless integration with `react-leaflet` and are pre-configured for Danish spatial data services.  
 
 Datafordeleren is a Danish government platform providing access to official geographic datasets such as maps, boundaries, and other spatial data.
----
 
 ## Features
 
@@ -11,8 +10,6 @@ Datafordeleren is a Danish government platform providing access to official geog
 - **WMS Layers:** Overlay WMS layers with customizable parameters like format, transparency, and layer settings.
 - **WFS Polygons:** Render vector data (e.g., municipal boundaries) directly from WFS services.
 - Support for Danish spatial reference systems (e.g., EPSG:25832).
-
----
 
 ## Installation
 
@@ -27,8 +24,6 @@ or
 ```bash
 yarn add react-leaflet-datafordeler-layers
 ```
-
----
 
 ## Usage Examples
 
@@ -59,8 +54,6 @@ import { WMTSSkaermkortTileLayer, EPSG25832WMTS } from 'react-leaflet-datafordel
 </MapContainer>
 ```
 
----
-
 ### WMS Layer
 
 Add a `Skærmkortet` map layer using WMS:
@@ -84,8 +77,6 @@ import { SkaermkortTileLayer, EPSG25832 } from 'react-leaflet-datafordeler-layer
   />
 </MapContainer>
 ```
-
----
 
 ### WFS Polygons
 
@@ -113,8 +104,6 @@ import { SkaermkortTileLayer, Kommuneinddeling, EPSG25832 } from 'react-leaflet-
 </MapContainer>
 ```
 
----
-
 ## Configuration
 
 ### CRS (Coordinate Reference Systems)
@@ -127,14 +116,13 @@ All components require authentication via `usernameAndPassword`:
 ```typescript
 { username: 'xxxx', password: 'yyyy' }
 ```
+
 This is the username and password of the Tjenestebruger that you've set up on Datafordeleren
----
 
 ## Contributing
 
 Contributions are welcome! Feel free to submit issues or pull requests on the [GitHub repository](https://github.com/chce/react-leaflet-datafordeler-layers).
 
----
 
 ## License
 
