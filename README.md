@@ -1,88 +1,140 @@
+# React Leaflet Components for Datafordeleren Services
 
-# react-leaflet-kds-layers
+This library provides React Leaflet components for integrating WMS, WMTS, and WFS services from [Datafordeleren](https://datafordeler.dk) into your maps. These components are designed for seamless integration with `react-leaflet` and are pre-configured for Danish spatial data services.  
 
-`react-leaflet-kds-layers` is a React library that provides pre-configured `WMSTileLayer` components for using various map layers from the Danish Climate Data Service (Klimadatastyrelsen). This library is designed to integrate seamlessly with `react-leaflet` maps by providing reusable and easy-to-set-up components for multiple Klimadatastyrelsen map layers. 
+Datafordeleren is a Danish government platform providing access to official geographic datasets such as maps, boundaries, and other spatial data.
+---
 
 ## Features
 
-- Simplifies integration with Klimadatastyrelsen map layers, such as **Skærmkortet**
-- Configurable for different Coordinate Reference Systems (CRS), layer types, and formats
-- Easily used in `<MapContainer>` elements as a drop-in replacement for `WMSTileLayer`
+- **WMTS Layers:** Add tiled maps such as `Skærmkortet` to your application.
+- **WMS Layers:** Overlay WMS layers with customizable parameters like format, transparency, and layer settings.
+- **WFS Polygons:** Render vector data (e.g., municipal boundaries) directly from WFS services.
+- Support for Danish spatial reference systems (e.g., EPSG:25832).
+
+---
 
 ## Installation
 
-To install this library, use npm or yarn:
+Install the package via npm or yarn:
 
 ```bash
-npm install react-leaflet-kds-layers
-# or
-yarn add react-leaflet-kds-layers
+npm install react-leaflet-datafordeler-layers
 ```
 
-You will also need to have `react-leaflet` and `leaflet` installed in your project:
+or
 
 ```bash
-npm install react-leaflet leaflet
-# or
-yarn add react-leaflet leaflet
+yarn add react-leaflet-datafordeler-layers
 ```
 
-## Usage
+---
 
-To use a specific map layer, import the component and add it as a child of a `<MapContainer>` element. You need an API token from Klimadatastyrelsen to access these layers.
+## Usage Examples
 
-### Example with Skærmkortet
+### WMTS Layer
 
-Here's how to use the **Skærmkortet** layer component:
+Display a `Skærmkortet` map using WMTS:
 
-```jsx
+```tsx
 import { MapContainer } from 'react-leaflet';
-import { SkaermkortTileLayer } from 'react-leaflet-kds-layers';
+import 'proj4leaflet';
+import { WMTSSkaermkortTileLayer, EPSG25832WMTS } from 'react-leaflet-datafordeler-layers';
 
-function MyMap() {
-  return (
-    <MapContainer center={[55.6761, 12.5683]} zoom={10} style={{ height: "100vh", width: "100%" }}>
-      <SkaermkortTileLayer
-        token="your_api_token_here"
-        layers="dtk_skaermkort"
-        format="image/png"
-        crs={CRS.EPSG3857}
-        transparent={false}
-      />
-    </MapContainer>
-  );
-}
-
-export default MyMap;
+<MapContainer
+  zoom={1}
+  style={{ height: '1000px', width: '1000px' }}
+  crs={EPSG25832WMTS}
+  maxZoom={13}
+  bounds={[[53.015, 2.47842], [58.6403, 17.5578]]}
+  center={[55.345, 10.335]}
+>
+  <WMTSSkaermkortTileLayer
+    dataSource="topo_skaermkort_daempet"
+    format="image/png"
+    layer="topo_skaermkort_daempet"
+    usernameAndPassword={{ username: 'xxxx', password: 'yyyy' }}
+    version="1.0.0"
+  />
+</MapContainer>
 ```
 
-## API
+---
 
-### SkaermkortTileLayer Component
+### WMS Layer
 
-Renders a `WMSTileLayer` for Skærmkortet maps. The available properties are:
+Add a `Skærmkortet` map layer using WMS:
 
-| Prop         | Type                                              | Required | Description                                                                 |
-|--------------|---------------------------------------------------|----------|-----------------------------------------------------------------------------|
-| `token`      | `string`                                          | Yes      | API token for accessing the map layer.                                      |
-| `crs`        | `typeof CRS.EPSG3395` \| `CRS`                    | No       | Coordinate Reference System; defaults to `CRS.EPSG3857` if not specified.   |
-| `transparent`| `boolean`                                         | No       | Determines if the layer should be transparent.                              |
-| `layers`     | `"dtk_skaermkort" \| "topo_skaermkort" \| ...`    | Yes      | Specifies the map layer to use. Options: `"dtk_skaermkort"`, `"topo_skaermkort"`, `"dtk_skaermkort_graa"`, `"dtk_skaermkort_daempet"`. |
-| `format`     | `"image/jpeg" \| "image/png"`                     | Yes      | Image format for the tiles.                                                 |
-| `version`    | `string`                                          | No       | WMS version, defaulting to `1.3.0`.                                         |
+```tsx
+import { MapContainer } from 'react-leaflet';
+import { SkaermkortTileLayer, EPSG25832 } from 'react-leaflet-datafordeler-layers';
 
-## Map Layers
+<MapContainer
+  zoom={3}
+  crs={EPSG25832}
+  bounds={[[53.015, 2.47842], [58.6403, 17.5578]]}
+  style={{ height: '1000px', width: '1000px' }}
+  center={[55.345, 10.335]}
+>
+  <SkaermkortTileLayer
+    layers="dtk_skaermkort"
+    format="image/png"
+    transparent={false}
+    usernameAndPassword={{ username: 'xxxx', password: 'yyyy' }}
+  />
+</MapContainer>
+```
 
-The `SkaermkortTileLayer` component supports the following map layers:
+---
 
-- **`dtk_skaermkort`**: Standard map view
-- **`topo_skaermkort`**: Topographic map
-- **`dtk_skaermkort_graa`**: Grayscale map
-- **`dtk_skaermkort_daempet`**: Dimmed map version
+### WFS Polygons
 
-## Attribution
+Render municipal boundaries using WFS on top of a Skærmkort:
 
-The tiles are provided by [Dataforsyningen](https://dataforsyningen.dk/) and require attribution to "Dataforsyningen".
+```tsx
+import { MapContainer } from 'react-leaflet';
+import { SkaermkortTileLayer, Kommuneinddeling, EPSG25832 } from 'react-leaflet-datafordeler-layers';
+
+<MapContainer
+  zoom={3}
+  crs={EPSG25832}
+  bounds={[[53.015, 2.47842], [58.6403, 17.5578]]}
+  style={{ height: '1000px', width: '1000px' }}
+  center={[55.345, 10.335]}
+>
+  <SkaermkortTileLayer
+    format="image/png"
+    layers="dtk_skaermkort"
+    usernameAndPassword={{ username: 'xxxx', password: 'yyyy' }}
+  />
+  <Kommuneinddeling
+    usernameAndPassword={{ username: 'xxxx', password: 'yyyy' }}
+  />
+</MapContainer>
+```
+
+---
+
+## Configuration
+
+### CRS (Coordinate Reference Systems)
+
+The library includes utilities for Danish CRS definitions such as EPSG:25832. Use the provided CRS configurations (e.g., `EPSG25832` and `EPSG25832WMTS`) for compatibility with Datafordeleren services.
+
+### Authentication
+
+All components require authentication via `usernameAndPassword`:
+```typescript
+{ username: 'xxxx', password: 'yyyy' }
+```
+This is the username and password of the Tjenestebruger that you've set up on Datafordeleren
+---
+
+## Contributing
+
+Contributions are welcome! Feel free to submit issues or pull requests on the [GitHub repository](https://github.com/chce/react-leaflet-datafordeler-layers).
+
+---
 
 ## License
 
