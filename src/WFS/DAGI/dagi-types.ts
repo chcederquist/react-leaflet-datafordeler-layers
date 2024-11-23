@@ -1,10 +1,10 @@
 import { DagiAfstemningsomraade } from './Afstemningsomraade';
 
 export type GenericDagiArea = {
-  'dagi10:id.lokalId': string,
-  'dagi25:id.lokalId': string,
-  'dagi50:id.lokalId': string,
-  'dagi2k:id.lokalId': string,
+  'dagi10:id.lokalId': {'#text': string},
+  'dagi25:id.lokalId': {'#text': string},
+  'dagi50:id.lokalId': {'#text': string},
+  'dagi2k:id.lokalId': {'#text': string},
   'dagi10:geometri': DagiGeometri
   'dagi25:geometri': DagiGeometri
   'dagi50:geometri': DagiGeometri
@@ -14,7 +14,7 @@ export type GenericDagiArea = {
 type GmlPolygon = {
   'gml:exterior': {
     'gml:LinearRing': {
-      'gml:posList': string;
+      'gml:posList': {'#text': string};
     };
   };
 };
