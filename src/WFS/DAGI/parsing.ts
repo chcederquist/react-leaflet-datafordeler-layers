@@ -14,7 +14,7 @@ export function getPolygonsFromDagiAreas<T extends keyof WfsMember>(dagiAreas: D
       polygonsForDagiArea.push()
       let maxPolySize = 200;
       let points: [number,number,number][] = []
-      let coords = surfaceMember['gml:Polygon']['gml:exterior']['gml:LinearRing']['gml:posList'].split(' ').map(c=>+c);
+      let coords = surfaceMember['gml:Polygon']['gml:exterior']['gml:LinearRing']['gml:posList']['#text'].split(' ').map(c=>+c);
       for (let i = 0; i < coords.length; i+=3) {
         points.push([coords[i], coords[i+1], coords[i+2]])
       }

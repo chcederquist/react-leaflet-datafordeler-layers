@@ -1,5 +1,5 @@
 {
-  "name": "react-leaflet-kds-layers",
+  "name": "react-leaflet-datafordeler-layers",
   "version": "1.0.0",
   "description": "WMSTileLayer components for maps provided by Klimadatastyrelsen",
   "main": "dist/index.js",
@@ -13,13 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "react-leaflet-kds-layers"
+    "url": "git+https://github.com/chce/react-leaflet-datafordeler-layers"
   },
   "author": "Christian Pilegaard Cederquist",
   "license": "GPL-3.0-or-later",
   "peerDependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-leaflet": "^4.2.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
@@ -60,8 +61,6 @@
   },
   "dependencies": {
     "proj4leaflet": "^1.0.2",
-    "react-leaflet": "^4.2.1",
-    "rapid-xml-to-json": "0.0.2",
-    "@chce/weeknumber-iso8601": "1.0.6"
+    "rapid-xml-to-json": "0.1.0"
   }
 }

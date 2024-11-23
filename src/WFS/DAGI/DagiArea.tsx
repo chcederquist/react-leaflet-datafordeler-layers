@@ -59,7 +59,7 @@ export function DagiArea({ token, maxAreasFetched = 100, typename, scale = '10',
       let json = xmlToJson(xml) as DagiMultiGeomResponse;
       console.log(json);
       const parseVotingAreas = getPolygonsFromDagiAreas(json, typenameToWfsMemberKey(typename, scale), (member) => {
-        return member[`dagi${scale}:id.lokalId`];
+        return member[`dagi${scale}:id.lokalId`]['#text'];
       }, scale)
       setVotingAreas(parseVotingAreas)
     }));
