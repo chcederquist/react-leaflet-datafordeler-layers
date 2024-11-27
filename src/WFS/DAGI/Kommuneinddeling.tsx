@@ -6,7 +6,6 @@ import { UsernameAndPassword } from '../../shared/types';
 import { Scale } from './dagi-types';
 
 export type KommuneinddelingProps = Readonly<{
-  token?: string;
   crs?: typeof CRS.EPSG3395 | typeof CRS.EPSG3857 | typeof CRS.EPSG4326 | typeof EPSG25832 | CRS;
   version?: string;
   usernameAndPassword?: UsernameAndPassword;
@@ -17,6 +16,6 @@ export type KommuneinddelingProps = Readonly<{
 
 export type GenericArea = {polygons: LatLng[][], id: number | string};
 
-export function Kommuneinddeling({ token, usernameAndPassword, crs, scale = '25' }: KommuneinddelingProps) {
-  return <DagiArea token={token} typename='Kommuneinddeling' usernameAndPassword={usernameAndPassword} scale={scale} crs={crs} fetchWithinViewport={false}></DagiArea>
+export function Kommuneinddeling({ usernameAndPassword, crs, scale = '25' }: KommuneinddelingProps) {
+  return <DagiArea typename='Kommuneinddeling' usernameAndPassword={usernameAndPassword} scale={scale} crs={crs} fetchWithinViewport={false}></DagiArea>
 }

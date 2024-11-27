@@ -6,7 +6,6 @@ import { DagiArea } from './DagiArea';
 import { UsernameAndPassword } from '../../shared/types';
 
 export type OpstillingskredsProps = Readonly<{
-  token?: string;
   usernameAndPassword?: UsernameAndPassword;
   crs?: typeof CRS.EPSG3395 | typeof CRS.EPSG3857 | typeof CRS.EPSG4326 | typeof EPSG25832 | CRS;
   version?: string;
@@ -20,6 +19,6 @@ export type DagiAfstemningsomraade = {
 } & GenericDagiArea;
 export type GenericArea = {polygons: LatLng[][], id: number | string};
 
-export function Opstillingskreds({ token, usernameAndPassword, scale = '50' }: OpstillingskredsProps) {
-  return <DagiArea token={token} usernameAndPassword={usernameAndPassword} scale={scale} typename='Opstillingskreds' fetchWithinViewport={false}></DagiArea>
+export function Opstillingskreds({ usernameAndPassword, scale = '50' }: OpstillingskredsProps) {
+  return <DagiArea usernameAndPassword={usernameAndPassword} scale={scale} typename='Opstillingskreds' fetchWithinViewport={false}></DagiArea>
 }

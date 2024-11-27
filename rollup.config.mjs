@@ -1,7 +1,7 @@
 import terser from '@rollup/plugin-terser';
 import baseConfig from './rollup.config.base.mjs';
 import dts from 'rollup-plugin-dts';
-import packageJson from './package.json' assert { type: 'json' };
+import packageJson from './package.json' with { type: 'json' };
 
 export default [
   {

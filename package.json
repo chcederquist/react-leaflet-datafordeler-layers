@@ -1,6 +1,6 @@
 {
   "name": "react-leaflet-datafordeler-layers",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "WMSTileLayer components for maps provided by Klimadatastyrelsen",
   "main": "dist/index.js",
   "browser": "dist/index.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chce/react-leaflet-datafordeler-layers"
+    "url": "git+https://github.com/chcederquist/react-leaflet-datafordeler-layers"
   },
   "author": "Christian Pilegaard Cederquist",
   "license": "GPL-3.0-or-later",
