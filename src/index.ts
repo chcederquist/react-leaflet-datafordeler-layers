@@ -16,6 +16,8 @@ export { Opstillingskreds } from './WFS/DAGI/Opstillingskreds';
 export type { OpstillingskredsProps } from './WFS/DAGI/Opstillingskreds';
 export { Regionsinddeling } from './WFS/DAGI/Regionsinddeling';
 export type { RegionsinddelingProps } from './WFS/DAGI/Regionsinddeling';
+export { Storkreds } from './WFS/DAGI/Storkreds';
+export type { StorkredsProps } from './WFS/DAGI/Storkreds';
 export { DagiArea } from './WFS/DAGI/DagiArea';
 export type { DagiAreaProps } from './WFS/DAGI/DagiArea'
 export { EPSG25832, EPSG25832WMTS } from './util';

@@ -1,4 +1,4 @@
-import { type CRS, type LatLng } from 'leaflet';
+import { type CRS } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { EPSG25832 } from '../../util';
 import { DagiArea } from './DagiArea';
@@ -11,10 +11,6 @@ export type KommuneinddelingProps = Readonly<{
   usernameAndPassword?: UsernameAndPassword;
   scale?: Scale;
 }>
-
-
-
-export type GenericArea = {polygons: LatLng[][], id: number | string};
 
 export function Kommuneinddeling({ usernameAndPassword, crs, scale = '25' }: KommuneinddelingProps) {
   return <DagiArea typename='Kommuneinddeling' usernameAndPassword={usernameAndPassword} scale={scale} crs={crs} fetchWithinViewport={false}></DagiArea>

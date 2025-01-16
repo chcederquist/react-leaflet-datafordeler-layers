@@ -1,7 +1,7 @@
 import { type LatLng, Point } from "leaflet";
 import { EPSG25832 } from "../../util";
-import { GenericArea } from "./Afstemningsomraade";
 import { WfsMember, DagiMultiGeomResponse, Scale } from "./dagi-types";
+import { GenericArea } from "./DagiArea";
 
 
 export function getPolygonsFromDagiAreas<T extends keyof WfsMember>(dagiAreas: DagiMultiGeomResponse, key: T, idGenerator: (member: WfsMember[T]) => string, scale: Scale) {

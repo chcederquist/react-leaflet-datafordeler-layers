@@ -43,6 +43,10 @@ export type WfsMember = {
   'dagi25:Kommuneinddeling': GenericDagiArea;
   'dagi50:Kommuneinddeling': GenericDagiArea;
   'dagi2k:Kommuneinddeling': GenericDagiArea;
+  'dagi10:Storkreds': GenericDagiArea;
+  'dagi25:Storkreds': GenericDagiArea;
+  'dagi50:Storkreds': GenericDagiArea;
+  'dagi2k:Storkreds': GenericDagiArea;
 };
 export type DagiMultiGeomResponse = {
   'wfs:FeatureCollection': {

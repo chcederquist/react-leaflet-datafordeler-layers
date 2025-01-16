@@ -2,10 +2,12 @@ import { type CRS, type LatLng } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { EPSG25832 } from '../../util';
 import { useEffect, useState } from 'react';
-import { Polygon, useMap, useMapEvents } from 'react-leaflet';
+import { Polygon, PolygonProps, useMap, useMapEvents } from 'react-leaflet';
 import { DagiMultiGeomResponse, Scale, WfsMember } from './dagi-types';
 import { getPolygonsFromDagiAreas } from './parsing';
 import { xmlToJson } from 'rapid-xml-to-json';
+
+export type AreaNames = 'Regionsinddeling' | 'Afstemningsomraade' | 'Opstillingskreds' | 'Kommuneinddeling' | 'Storkreds';
 
 export type DagiAreaProps = Readonly<{
   usernameAndPassword?: {username: string; password: string};
@@ -14,16 +16,17 @@ export type DagiAreaProps = Readonly<{
   scale?: Scale;
   maxAreasFetched?: number;
   fetchWithinViewport: boolean;
-  typename: 'Regionsinddeling' | 'Afstemningsomraade' | 'Opstillingskreds' | 'Kommuneinddeling'
+  typename: AreaNames
+  polygonProps?: Partial<PolygonProps>;
 }>
 
-const typenameToWfsMemberKey = (key: 'Regionsinddeling' | 'Afstemningsomraade' | 'Opstillingskreds' | 'Kommuneinddeling', scale: Scale): keyof WfsMember => {
+const typenameToWfsMemberKey = (key: AreaNames, scale: Scale): keyof WfsMember => {
   return `dagi${scale}:${key}`;
 }
 
-export type GenericArea = {polygons: LatLng[][], id: number | string};
+export type GenericArea = { polygons: LatLng[][], id: number | string };
 
-export function DagiArea({ maxAreasFetched = 100, typename, scale = '10', fetchWithinViewport, usernameAndPassword }: DagiAreaProps) {
+export function DagiArea({ maxAreasFetched = 100, typename, scale = '10', fetchWithinViewport, usernameAndPassword, polygonProps }: DagiAreaProps) {
   // Fetch geodata
   const map = useMap();
   const [bounds, setBounds] = useState<[number,number,number,number]>();
@@ -64,5 +67,5 @@ export function DagiArea({ maxAreasFetched = 100, typename, scale = '10', fetchW
     }));
     
   }, [bounds, scale, typename, maxAreasFetched, usernameAndPassword?.username, usernameAndPassword?.password, usernameAndPassword])
-  return votingAreas.flatMap(votingArea => votingArea.polygons.map((polygon,polygonI)=><Polygon key={votingArea.id.toString()+polygonI.toString()} positions={polygon}></Polygon>))
+  return votingAreas.flatMap(votingArea => votingArea.polygons.map((polygon,polygonI)=><Polygon key={votingArea.id.toString()+polygonI.toString()} positions={polygon} {...polygonProps}></Polygon>))
 }
